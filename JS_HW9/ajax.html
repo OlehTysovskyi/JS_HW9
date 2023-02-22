@@ -1,0 +1,47 @@
+<html>
+<head>
+<title>AJAX - Node</title>
+<link rel="shortcut icon" href="#">
+</head>
+<body>
+  
+  	<h1>Ajax - Registration</h1>
+  	<form>
+    	<input type="text" id="userFirstnameGet" placeholder=" firstname">
+    	<br>
+    	<input type="text" id="userLastnameGet" placeholder=" lastname">
+    	<br>
+    	<input type="text" id="userAgeGet" placeholder=" age">
+    	<br>
+    	<input type="text" id="userAddressGet" placeholder=" address">
+    	<br>
+    	<input type="button" value="Send" onclick="sendData()">
+  	</form>
+  
+ 	<script>
+		function sendData() {
+	      	let userData = {
+	        	userFirstname:document.getElementById('userFirstnameGet').value,
+	        	userLastname:document.getElementById('userLastnameGet').value,
+	        	userAge:document.getElementById('userAgeGet').value,
+	        	userAddress:document.getElementById('userAddressGet').value
+	      	};
+	      
+	      	let userAge = document.getElementById('userAgeGet').value;
+	 		if(userAge > 0 && userAge < 100){
+				let xhrGet = new XMLHttpRequest();
+				xhrGet.open("GET", "/userGet?userFirstname="+userData.userFirstname+";&userLastname="+userData.userLastname+";&userAge="+ userData.userAge + ";&userAddress=" + userData.userAddress);
+				xhrGet.setRequestHeader("Content-type", "aplication/json");
+				xhrGet.send();
+	     	 	let xhrPost = new XMLHttpRequest();
+	     	 	xhrPost.open("POST", "/userPost?userFirstname="+userData.userFirstname+";&userLastname="+userData.userLastname+";&userAge="+ userData.userAge + ";&userAddress=" + userData.userAddress);
+	     	 	xhrPost.setRequestHeader("Content-type", "aplication/json");
+	     	 	xhrPost.send(JSON.stringify(userData));
+	    	}else {
+	    		alert("Age must be 0-100");
+	    	}
+		}
+  	</script>
+
+</body>
+</html>
